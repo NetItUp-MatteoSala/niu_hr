@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="niu_hr_attendance.report_attendance">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2 class="mt-4">
+                        Report Presenze per <t t-esc="docs[0].employee_id.name"/>
+                    </h2>
+
+                    <t t-set="total_hours" t-value="0.0"/>
+                    <t t-set="total_extra_hours" t-value="0.0"/>
+                    <t t-set="current_date" t-value="False"/>
+                    <t t-set="current_employee" t-value="False"/>
+
+                    <table class="table table-condensed mt-4">
+                        <thead>
+                            <tr>
+                                <th>Dipendente</th>
+                                <th>Giorno</th>
+                                <th>Entrata</th>
+                                <th>Uscita</th>
+                                <th>Ore Lavorate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="docs.sorted(key=lambda x: (x.employee_id, x.check_in_date, x.check_in_time))" t-as="e">
+                                <t t-if="current_date != e.check_in_date or current_employee != e.employee_id">
+                                    <t t-if="current_date">
+                                        <tr class="table-light">
+                                            <td colspan="4"><strong>Totale giornaliero</strong></td>
+                                            <td><strong><span t-esc="daily_total" t-options="{'widget': 'float_time'}"/></strong></td>
+                                        </tr>
+                                    </t>
+                                    <t t-set="daily_total" t-value="0.0"/>
+                                    <t t-set="current_date" t-value="e.check_in_date"/>
+                                    <t t-set="current_employee" t-value="e.employee_id"/>
+                                </t>
+
+                                <tr>
+                                    <td>
+                                        <span t-field="e.employee_id.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="e.check_in_date" t-options="{'widget': 'date', 'format': 'dd/MM/yyyy'}"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="e.check_in_time" t-options="{'widget': 'float_time'}"/>
+                                    </td>
+                                    <td>
+                                        <t t-if="e.check_out">
+                                            <span t-field="e.check_out_time" t-options="{'widget': 'float_time'}"/>
+                                        </t>
+                                        <t t-else="">
+                                            Attualmente a lavoro
+                                        </t>
+                                    </td>
+                                    <td>
+                                        <t t-if="e.worked_hours">
+                                            <t t-set="total_hours" t-value="total_hours + e.worked_hours"/>
+                                            <t t-set="daily_total" t-value="daily_total + e.worked_hours"/>
+                                            <span t-field="e.worked_hours" t-options="{'widget': 'float_time'}"/>
+                                            <t t-if="e.validated_overtime_hours">
+                                                <t t-set="total_extra_hours" t-value="total_extra_hours + e.validated_overtime_hours"/>
+                                                <span> di cui extra: </span>
+                                                <span class="text-danger" t-field="e.validated_overtime_hours" t-options="{'widget': 'float_time'}"/>
+                                            </t>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </t>
+                            
+                            <t t-if="current_date">
+                                <tr class="table-light">
+                                    <td colspan="4"><strong>Totale giornaliero</strong></td>
+                                    <td><strong><span t-esc="daily_total" t-options="{'widget': 'float_time'}"/></strong></td>
+                                </tr>
+                            </t>
+
+                            <t t-if="total_hours > 0">
+                                <tr class="table-info">
+                                    <td colspan="4"><strong>Totale ore</strong></td>
+                                    <td><strong><span t-esc="total_hours" t-options="{'widget': 'float_time'}"/></strong></td>
+                                </tr>
+                            </t>
+                            <t t-if="total_extra_hours > 0">
+                                <tr class="table-info">
+                                    <td colspan="4"><strong>Totale ore extra</strong></td>
+                                    <td><strong><span t-esc="total_extra_hours" t-options="{'widget': 'float_time'}"/></strong></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
