@@ -2,10 +2,10 @@
 <odoo>
     <template id="niu_hr_attendance.report_attendance">
         <t t-call="web.html_container">
-            <t t-call="web.external_layout">
+            <t t-call="niu_hr_attendance.external_layout_custom">
                 <div class="page">
                     <h2 class="mt-4">
-                        Report Presenze per <t t-esc="docs[0].employee_id.name"/>
+                        Report Presenze per <t t-out="docs[0].employee_id.name"/>
                     </h2>
 
                     <t t-set="total_hours" t-value="0.0"/>
@@ -29,7 +29,7 @@
                                     <t t-if="current_date">
                                         <tr class="table-light">
                                             <td colspan="4"><strong>Totale giornaliero</strong></td>
-                                            <td><strong><span t-esc="daily_total" t-options="{'widget': 'float_time'}"/></strong></td>
+                                            <td><strong><span t-out="daily_total" t-options="{'widget': 'float_time'}"/></strong></td>
                                         </tr>
                                     </t>
                                     <t t-set="daily_total" t-value="0.0"/>
@@ -73,20 +73,20 @@
                             <t t-if="current_date">
                                 <tr class="table-light">
                                     <td colspan="4"><strong>Totale giornaliero</strong></td>
-                                    <td><strong><span t-esc="daily_total" t-options="{'widget': 'float_time'}"/></strong></td>
+                                    <td><strong><span t-out="daily_total" t-options="{'widget': 'float_time'}"/></strong></td>
                                 </tr>
                             </t>
 
                             <t t-if="total_hours > 0">
                                 <tr class="table-info">
                                     <td colspan="4"><strong>Totale ore</strong></td>
-                                    <td><strong><span t-esc="total_hours" t-options="{'widget': 'float_time'}"/></strong></td>
+                                    <td><strong><span t-out="total_hours" t-options="{'widget': 'float_time'}"/></strong></td>
                                 </tr>
                             </t>
                             <t t-if="total_extra_hours > 0">
                                 <tr class="table-info">
                                     <td colspan="4"><strong>Totale ore extra</strong></td>
-                                    <td><strong><span t-esc="total_extra_hours" t-options="{'widget': 'float_time'}"/></strong></td>
+                                    <td><strong><span t-out="total_extra_hours" t-options="{'widget': 'float_time'}"/></strong></td>
                                 </tr>
                             </t>
                         </tbody>

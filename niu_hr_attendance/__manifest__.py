@@ -11,7 +11,8 @@ This module aims to track employee's work hours and output them in a human reada
     'data': [
         #'security/ir.model.access.csv',
         'reports/hr_attendance_report_templates.xml',
-        'reports/hr_attendance_views.xml'
+        'reports/hr_attendance_views.xml',
+        'reports/external_layout.xml',
     ],
     'installable': True,
     'application': True,

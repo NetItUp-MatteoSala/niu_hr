@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="external_layout_custom">
+        <div class="header" >
+            <div class="row">
+                <div class="col-4">
+                    <img t-if="res_company.logo_web" t-att-src="image_data_uri(res_company.logo_web)" style="max-height: 200px;" alt="Logo"/>
+                </div>
+                <div class="col-8 text-end">
+                    <h3><span t-field="res_company.name"/></h3>
+                    <div t-if="res_company.street"><span t-field="res_company.street"/></div>
+                    <div t-if="res_company.street2"><span t-field="res_company.street2"/></div>
+                    <div>
+                        <span t-if="res_company.zip"><span t-field="res_company.zip"/> ,</span>
+                        <span t-if="res_company.city"><span t-field="res_company.city"/> -</span>
+                        <span t-if="res_company.country_id"><span t-field="res_company.country_id"/></span>
+                    </div>
+                    <div t-if="res_company.vat">VAT: <span t-field="res_company.vat"/></div>
+                    <div t-if="res_company.phone">Tel: <span t-field="res_company.phone"/></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="article" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <t t-out="0"/>
+        </div>
+
+        <div class="footer">
+            <div class="text-center">
+                <div class="text-muted">
+                     <h6><span t-field="res_company.name"/></h6>
+                    <br/>
+                    Page: <span class="page"/> / <span class="topage"/>
+                </div>
+            </div>
+        </div>
+    </template>
+</odoo>
