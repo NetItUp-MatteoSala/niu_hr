@@ -45,11 +45,11 @@
                                         <span t-field="e.check_in_date" t-options="{'widget': 'date', 'format': 'dd/MM/yyyy'}"/>
                                     </td>
                                     <td>
-                                        <span t-field="e.check_in_time" t-options="{'widget': 'float_time'}"/>
+                                        <span t-esc="context_timestamp(e.check_in).strftime('%H:%M')"/>
                                     </td>
                                     <td>
                                         <t t-if="e.check_out">
-                                            <span t-field="e.check_out_time" t-options="{'widget': 'float_time'}"/>
+                                            <span t-esc="context_timestamp(e.check_out).strftime('%H:%M')"/>
                                         </t>
                                         <t t-else="">
                                             Attualmente a lavoro
