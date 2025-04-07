@@ -13,10 +13,10 @@
                     <t t-set="current_date" t-value="False"/>
                     <t t-set="current_employee" t-value="False"/>
 
-                    <table class="table table-condensed mt-4">
+                    <table class="table table-borderless table-sm mt-4">
                         <thead>
                             <tr>
-                                <th>Dipendente</th>
+                                <!-- <th>Dipendente</th> -->
                                 <th>Giorno</th>
                                 <th>Entrata</th>
                                 <th>Uscita</th>
@@ -38,9 +38,9 @@
                                 </t>
 
                                 <tr>
-                                    <td>
+                                    <!-- <td>
                                         <span t-field="e.employee_id.name"/>
-                                    </td>
+                                    </td> -->
                                     <td>
                                         <span t-field="e.check_in_date" t-options="{'widget': 'date', 'format': 'dd/MM/yyyy'}"/>
                                     </td>
@@ -60,7 +60,7 @@
                                             <t t-set="total_hours" t-value="total_hours + e.worked_hours"/>
                                             <t t-set="daily_total" t-value="daily_total + e.worked_hours"/>
                                             <span t-field="e.worked_hours" t-options="{'widget': 'float_time'}"/>
-                                            <t t-if="e.validated_overtime_hours">
+                                            <t t-if="e.validated_overtime_hours > 0">
                                                 <t t-set="total_extra_hours" t-value="total_extra_hours + e.validated_overtime_hours"/>
                                                 <span> di cui extra: </span>
                                                 <span class="text-danger" t-field="e.validated_overtime_hours" t-options="{'widget': 'float_time'}"/>
@@ -71,20 +71,19 @@
                             </t>
                             
                             <t t-if="current_date">
-                                <tr class="table-light">
+                                <tr class="">
                                     <td colspan="4"><strong>Totale giornaliero</strong></td>
                                     <td><strong><span t-out="daily_total" t-options="{'widget': 'float_time'}"/></strong></td>
                                 </tr>
                             </t>
-
                             <t t-if="total_hours > 0">
-                                <tr class="table-info">
+                                <tr class="border">
                                     <td colspan="4"><strong>Totale ore</strong></td>
                                     <td><strong><span t-out="total_hours" t-options="{'widget': 'float_time'}"/></strong></td>
                                 </tr>
                             </t>
                             <t t-if="total_extra_hours > 0">
-                                <tr class="table-info">
+                                <tr class="border">
                                     <td colspan="4"><strong>Totale ore extra</strong></td>
                                     <td><strong><span t-out="total_extra_hours" t-options="{'widget': 'float_time'}"/></strong></td>
                                 </tr>
